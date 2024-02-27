@@ -1,0 +1,6 @@
+{
+  "editor.detectIndentation": false,
+  "editor.inlineSuggest.enabled": true,
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2
+}

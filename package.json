@@ -1,0 +1,33 @@
+{
+  "name": "service-api-boilerplate",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Service Api Boilerplate",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon src/index.js",
+    "sequelize:generate-migration": "npx sequelize-cli migration:generate --config src/config/sequelize-config.js --migrations-path src/lib/sequelize/migrations --name",
+    "sequelize:migrate-up-all": "npx sequelize-cli db:migrate --config src/config/sequelize-config.js --migrations-path src/lib/sequelize/migrations",
+    "sequelize:migrate-up": "npx sequelize-cli db:migrate --config src/config/sequelize-config.js --migrations-path src/lib/sequelize/migrations --name",
+    "sequelize:migrate-down": "npx sequelize-cli db:migrate:undo --config src/config/sequelize-config.js --migrations-path src/lib/sequelize/migrations --name",
+    "sequelize:generate-seeder": "npx sequelize-cli seed:generate --config src/config/sequelize-config.js --seeders-path src/lib/sequelize/seeders --name",
+    "sequelize:seed-up-all": "npx sequelize-cli db:seed:all --config src/config/sequelize-config.js --seeders-path src/lib/sequelize/seeders",
+    "sequelize:seed-up": "npx sequelize-cli db:seed --config src/config/sequelize-config.js --seeders-path src/lib/sequelize/seeders --seed",
+    "sequelize:seed-down": "npx sequelize-cli db:seed:undo --config src/config/sequelize-config.js --seeders-path src/lib/sequelize/seeders --seed"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "csv-parser": "^3.0.0",
+    "date-fns": "^2.30.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^2.3.3",
+    "nodemon": "^2.0.20",
+    "sequelize": "^6.35.2",
+    "uuid": "^9.0.1",
+    "xlsx": "^0.18.5"
+  }
+}

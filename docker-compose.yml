@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  mysqldb:
+    image: mysql:8.2
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_DATABASE: '${DB_NAME}'
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+    ports:
+      - "${MYSQLDB_LOCAL_PORT}:${MYSQLDB_DOCKER_PORT}"
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - fe_network
+
+  app:
+    depends_on:
+      - mysqldb
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: prisma-react
+    ports:
+      - 3009:3009
+    # restart: always
+    networks:
+      - fe_network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 8072:80
+    restart: unless-stopped
+    environment:
+      PMA_HOST: mysqldb
+    depends_on:
+      - mysqldb
+    networks:
+      - fe_network
+
+volumes: 
+  db:
+networks:
+  fe_network:
+    driver: bridge
