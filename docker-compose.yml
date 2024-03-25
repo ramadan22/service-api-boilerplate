@@ -1,9 +1,9 @@
 version: '3.8'
 
 services:
-  mysqldb:
+  db-service-api-boilerplate:
     image: mysql:8.2
-    container_name: mysql-service-api
+    container_name: db-service-api-boilerplate
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
@@ -17,7 +17,7 @@ services:
 
   app:
     depends_on:
-      - mysqldb
+      - db-service-api-boilerplate
     build:
       context: .
       dockerfile: ./docker/app/Dockerfile
