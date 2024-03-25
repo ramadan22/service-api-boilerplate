@@ -1,0 +1,15 @@
+  name: Deploy Web Profile
+
+  on:
+    push:
+      branch:
+        - main
+
+  jobs:
+    build:
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v2
+        
