@@ -3,7 +3,7 @@ version: '3.8'
 services:
   mysqldb:
     image: mysql:8.2
-    container_name: mysql
+    container_name: mysql-service-api
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
