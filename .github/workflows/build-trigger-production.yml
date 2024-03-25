@@ -1,15 +1,67 @@
-  name: Deploy Web Profile
+name: Deploy Web Profile
 
-  on:
-    push:
-      branch:
-        - main
+on:
+  push:
+    branch:
+      - main
 
-  jobs:
-    build:
-      runs-on: ubuntu-latest
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-      steps:
-        - name: Checkout Repository
-          uses: actions/checkout@v2
-        
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Create .env file
+        uses: SpicyPizza/create-envfile@v2.0
+        with:
+          envkey_NODE_ENV: production
+          envkey_PORT: ${{ secrets.PORT }}
+          envkey_X_API_KEY: ${{ secrets.X_API_KEY }}
+          envkey_ACCESS_TOKEN_KEY: ""
+          # envkey_ACCESS_TOKEN_KEY: ${{ secrets.ACCESS_TOKEN_KEY }}
+          envkey_DB_HOST: ${{ secrets.DB_HOST }}
+          envkey_DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          envkey_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          envkey_DB_NAME: ${{ secrets.DB_NAME }}
+          envkey_DB_PORT: ${{ secrets.DB_PORT }}
+          envkey_MYSQL_DOCKER_PORT: ${{ secrets.MYSQL_DOCKER_PORT }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Docker images
+        run: |
+          docker-compose -f docker-compose.yml build
+
+      - name: Save Docker Image to Tarball
+        run: |
+          docker save service-api -o service-api.tar
+          docker save mysql -o mysql.tar
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: my-artifact
+          path: |
+            service-api.tar
+            mysql.tar
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: my-artifact
+          path: dockerfiles
+
+      - name: Transfer file via FTP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          source: dockerfiles/*
+          target: "/home/${{ secrets.VPS_USERNAME }}/"
