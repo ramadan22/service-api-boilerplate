@@ -1,48 +1,35 @@
 version: '3.8'
 
 services:
-  mysqldb:
+  mysql_db_service_boilerplate:
     image: mysql:8.2
+    container_name: mysql
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: '${DB_NAME}'
-      MYSQL_USER: '${DB_USERNAME}'
-      MYSQL_PASSWORD: '${DB_PASSWORD}'
     ports:
-      - "${MYSQLDB_LOCAL_PORT}:${MYSQLDB_DOCKER_PORT}"
+      - "${DB_PORT}:${MYSQL_DOCKER_PORT}"
     volumes:
       - db:/var/lib/mysql
     networks:
-      - fe_network
+      - service_api_network
 
   app:
     depends_on:
-      - mysqldb
+      - mysql_db_service_boilerplate
     build:
-      context: .
+      context: ./docker/app/Dockerfile
       dockerfile: Dockerfile
-    container_name: prisma-react
+    image: service-api:latest
+    container_name: service-api
     ports:
-      - 3009:3009
-    # restart: always
+      - "${PORT}:${PORT}"
     networks:
-      - fe_network
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    ports:
-      - 8072:80
-    restart: unless-stopped
-    environment:
-      PMA_HOST: mysqldb
-    depends_on:
-      - mysqldb
-    networks:
-      - fe_network
+      - service_api_network
 
 volumes: 
   db:
 networks:
-  fe_network:
+  service_api_network:
     driver: bridge
