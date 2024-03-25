@@ -19,8 +19,8 @@ services:
     depends_on:
       - mysql_db_service_boilerplate
     build:
-      context: ./docker/app/Dockerfile
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./docker/app/Dockerfile
     image: service-api:latest
     container_name: service-api
     ports:
