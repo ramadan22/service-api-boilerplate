@@ -43,12 +43,14 @@ jobs:
       - name: Save Docker Image to Tarball
         run: |
           docker save service-api -o service-api.tar
+          docker save mysql_db_service_boilerplate -o mysql_db_service_boilerplate.tar
 
       - uses: actions/upload-artifact@v4
         with:
           name: my-artifact
           path: |
             service-api.tar
+            mysql_db_service_boilerplate.tar
 
       - uses: actions/download-artifact@v4
         with:
