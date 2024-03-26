@@ -65,3 +65,32 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           source: dockerfiles/*
           target: "/home/${{ secrets.VPS_USERNAME }}/"
+
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            # Check if Docker network exists
+            if [[ -z $(sudo docker network ls --format '{{.Name}}' | grep 'service_api_network') ]]; then
+              echo "Creating Docker network"
+              sudo docker network create service_api_network
+            else
+              echo "Docker network 'service_api_network' already exists, skipping creation."
+            fi
+
+            # Stop and remove existing containers (if any)
+            sudo docker stop service-api db-service-api-boilerplate || true
+            sudo docker rm service-api db-service-api-boilerplate || true
+
+            sudo docker image prune -a --force
+
+            sudo docker image import /home/${{ secrets.VPS_USERNAME }}/dockerfiles/service-api.tar service-api:latest
+            sudo docker image import /home/${{ secrets.VPS_USERNAME }}/dockerfiles/my-db-mysql.tar my-db-mysql:alpine-slim
+
+            sudo docker run -d --name service-api -p ${{ secrets.PORT }}:${{ secrets.PORT }} --network service_api_network ${{ secrets.VPS_USERNAME }}/service-api:latest
+            sudo docker run -d --name db-service-api-boilerplate -p 3306:3306 --network service_api_network ${{ secrets.DOCKER_USERNAME }}/my-db-mysql:8.2
+
+            sudo rm /home/${{ secrets.VPS_USERNAME }}/dockerfiles/*
