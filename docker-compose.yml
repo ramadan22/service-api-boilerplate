@@ -2,7 +2,10 @@ version: '3.8'
 
 services:
   db-service-api-boilerplate:
-    image: mysql:8.2
+    build:
+      context: .
+      dockerfile: ./docker/mysql/Dockerfile
+    image: my-db-mysql:8.2
     container_name: db-service-api-boilerplate
     restart: unless-stopped
     environment:

@@ -38,7 +38,7 @@ jobs:
 
       - name: Build Docker images
         run: |
-          docker-compose -f docker-compose.yml pull
+          docker-compose -f docker-compose.yml build
 
       - name: Save Docker Image to Tarball
         run: |
