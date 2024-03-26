@@ -8,7 +8,7 @@ services:
     image: my-db-mysql:8.2
     container_name: db-service-api-boilerplate
     restart: unless-stopped
-    environment:
+    args:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: '${DB_NAME}'
     ports:
