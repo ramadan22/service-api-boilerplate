@@ -19,8 +19,7 @@ jobs:
           envkey_NODE_ENV: production
           envkey_PORT: ${{ secrets.PORT }}
           envkey_X_API_KEY: ${{ secrets.X_API_KEY }}
-          envkey_ACCESS_TOKEN_KEY: ""
-          # envkey_ACCESS_TOKEN_KEY: ${{ secrets.ACCESS_TOKEN_KEY }}
+          envkey_ACCESS_TOKEN_KEY: ${{ secrets.ACCESS_TOKEN_KEY }}
           envkey_DB_HOST: ${{ secrets.DB_HOST }}
           envkey_DB_USERNAME: ${{ secrets.DB_USERNAME }}
           envkey_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
