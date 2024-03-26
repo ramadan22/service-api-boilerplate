@@ -93,4 +93,4 @@ jobs:
             sudo docker run -d --name service-api -p ${{ secrets.PORT }}:${{ secrets.PORT }} --network service_api_network service-api:latest
             sudo docker run -d --name db-service-api-boilerplate -p 3306:3306 --network service_api_network my-db-mysql:8.2
 
-            sudo rm /home/${{ secrets.VPS_USERNAME }}/dockerfiles/*
+            # sudo rm /home/${{ secrets.VPS_USERNAME }}/dockerfiles/*
