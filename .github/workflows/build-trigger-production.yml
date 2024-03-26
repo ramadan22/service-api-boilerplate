@@ -1,4 +1,4 @@
-name: Deploy Web Profile
+name: Deploy Web Service API
 
 on:
   push:
@@ -88,7 +88,7 @@ jobs:
             sudo docker image prune -a --force
 
             sudo docker image import /home/${{ secrets.VPS_USERNAME }}/dockerfiles/service-api.tar service-api:latest
-            sudo docker image import /home/${{ secrets.VPS_USERNAME }}/dockerfiles/my-db-mysql.tar my-db-mysql:alpine-slim
+            sudo docker image import /home/${{ secrets.VPS_USERNAME }}/dockerfiles/my-db-mysql.tar my-db-mysql:8.2
 
             sudo docker run -d --name service-api -p ${{ secrets.PORT }}:${{ secrets.PORT }} --network service_api_network ${{ secrets.VPS_USERNAME }}/service-api:latest
             sudo docker run -d --name db-service-api-boilerplate -p 3306:3306 --network service_api_network ${{ secrets.VPS_USERNAME }}/my-db-mysql:8.2
