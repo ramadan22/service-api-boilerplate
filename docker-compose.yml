@@ -13,8 +13,6 @@ services:
     restart: unless-stopped
     ports:
       - "${DB_PORT}:3306"
-    volumes:
-      - db:/var/lib/mysql
     networks:
       - service-api-network
 
