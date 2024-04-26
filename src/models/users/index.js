@@ -108,7 +108,7 @@ const deleteData = (id) => {
 }
 
 const getDataDetail = (id) => {
-  const includeFields = ['id_sub_district', 'created_at', 'updated_at'];
+  const includeFields = ['created_at', 'updated_at'];
   const excludeFields = ['password', 'is_delete'];
 
   const selectFields = sqlString.convertSelectField({ fields, includeFields, excludeFields });

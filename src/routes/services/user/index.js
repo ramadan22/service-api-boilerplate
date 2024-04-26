@@ -1,7 +1,7 @@
 const express = require('express');
 const jwt = require('../../../lib/jwt');
-const response = require('../../../utils/response');
-const AuthUserHasRole = require('../../../helpers/AuthUserHasRole');
+// const response = require('../../../utils/response');
+// const AuthUserHasRole = require('../../../helpers/AuthUserHasRole');
 
 const ProfileUserController = require('../../../controller/services/users/profile');
 const UpdateProfileController = require('../../../controller/services/users/updateProfile');

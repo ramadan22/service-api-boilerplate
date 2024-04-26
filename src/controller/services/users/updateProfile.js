@@ -1,9 +1,9 @@
 const UserModel = require('../../../models/users');
 const ResponseUtils = require('../../../utils/response');
 const ValidationUtils = require('../../../utils/validation');
-const SubDistrictsModel = require('../../../models/sub-districts');
+// const SubDistrictsModel = require('../../../models/sub-districts');
 const FilterObjectUtils = require('../../../utils/converter/filterObject');
-const ConvertLocationUtils = require('../../../utils/converter/convertLocation');
+// const ConvertLocationUtils = require('../../../utils/converter/convertLocation');
 
 const updateProfile = async (req, res) => {
   try {
@@ -28,12 +28,12 @@ const updateProfile = async (req, res) => {
 
     await UserModel.updateData(body, id_user);
 
-    const [getDetailLocation] = await SubDistrictsModel.getDataDetail(body.id_sub_district);
+    // const [getDetailLocation] = await SubDistrictsModel.getDataDetail(body.id_sub_district);
 
     const payloadResponse = {
       ...FilterObjectUtils.filter(body, ['id_sub_district']),
       gender: body.gender === 1 ? 'Male' : 'Female',
-      location: ConvertLocationUtils.location(getDetailLocation[0]),
+      // location: ConvertLocationUtils.location(getDetailLocation[0]),
     };
 
     ResponseUtils.defaultResponse({

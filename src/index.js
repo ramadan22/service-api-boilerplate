@@ -19,19 +19,21 @@ const authenticationRoutes = require('./routes/authentication');
 app.use('/authentication', authenticationRoutes);
 
 
-// route service user
+// route cms user
 const usersRoutes = require('./routes/cms/users');
 app.use('/cms/users', usersRoutes);
 
-// route service roles
+// route cms roles
 const rolesRoutes = require('./routes/cms/roles');
 app.use('/cms/roles', rolesRoutes);
 
-// route service roles
+// route cms roles
 const managementRolesRoutes = require('./routes/cms/management-roles');
 app.use('/cms/management-roles', managementRolesRoutes);
 
-
+// route service user
+const usersServiceRoutes = require('./routes/services/user');
+app.use('/service/users', usersServiceRoutes);
 
 app.use((err, req, res, next) => {
   res.json({

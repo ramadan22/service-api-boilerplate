@@ -1,9 +1,10 @@
 name: Deploy Service API
 
 on:
-  push:
+  pull_request:
     branch:
       - main
+    types: [closed]
 
 jobs:
   build:
